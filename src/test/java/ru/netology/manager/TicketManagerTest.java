@@ -48,4 +48,27 @@ class TicketManagerTest {
         Ticket[] actual = manager.findAll("VNK", "RGA", ticket);
         assertArrayEquals(actual, expected);
     }
+
+    @Test                           // один билет верный
+    void findAllWhenOneCorrect() {
+        repository.save(one);
+        repository.save(two); // must be 4, price 500
+        repository.save(three);
+        repository.save(fife);
+        repository.save(seven);
+        Ticket[] expected = {two};
+        Ticket[] actual = manager.findAll("VNK", "RGA");
+        assertArrayEquals(actual, expected);
+    }
+
+    @Test                           //ожидаемый набор пустой
+    void findAllWhenEmpty() {
+        repository.save(one);
+        repository.save(three);
+        repository.save(fife);
+        repository.save(seven);
+        Ticket[] expected = {};
+        Ticket[] actual = manager.findAll("VNK", "RGA");
+        assertArrayEquals(actual, expected);
+    }
 }
